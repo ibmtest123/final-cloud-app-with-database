@@ -61,20 +61,25 @@
         <div class="card mt-1">
             <div class="card-header">
                 <h5>Question: {{ score.question.question_text }}</h5>
-                {% if score.question.id in selected_ids %}
-                    {% if score.is_correct %}
-                        <p class="text-success">You answered correctly.</p>
+                {% if score.is_correct %}
+                    <p class="text-success">You answered correctly.</p>
+                {% else %}
+                    <p class="text-danger">You answered incorrectly.</p>
+                {% endif %}
+                {% if score.selected_choice %}
+                    {% if score.selected_choice.is_correct %}
+                        <p class="text-success">Correct answer: {{ score.selected_choice.choice_text }}</p>
                     {% else %}
-                        <p class="text-danger">You answered incorrectly.</p>
+                        <p class="text-danger">Correct answer: {{ score.correct_choice.choice_text }}</p>
                     {% endif %}
                 {% else %}
                     <p class="text-muted">Question not answered.</p>
                 {% endif %}
             </div>
         </div>
-    {% endfor %}
-
+        {% endfor %}
     </div>
 </div>
+
 </body>
 </html>

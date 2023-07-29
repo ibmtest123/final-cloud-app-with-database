@@ -131,7 +131,18 @@ def show_exam_result(request, course_id, submission_id):
     question_scores = []
     for question in course.question_set.all():
         is_correct = question.is_get_score(selected_ids)
-        question_scores.append({'question': question, 'is_correct': is_correct})
+        selected_choice = None
+        for choice in question.choice_set.all():
+            if choice.id in selected_ids:
+                selected_choice = choice
+                break
+        correct_choice = question.choice_set.filter(is_correct=True).first()
+        question_scores.append({
+            'question': question,
+            'is_correct': is_correct,
+            'selected_choice': selected_choice,
+            'correct_choice': correct_choice,
+        })
         if is_correct:
             total_score += question.grade
     passing_score_threshold = 80
@@ -144,6 +155,7 @@ def show_exam_result(request, course_id, submission_id):
         'question_scores': question_scores,
     }
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
+
 
 
 

@@ -112,9 +112,12 @@ class Question(models.Model):
     def __str__(self):
         return self.question_text
 class Choice(models.Model):
-     question = models.ForeignKey(Question, on_delete= models.CASCADE)
-     choice_text = models.TextField()
-     is_correct = models.BooleanField(default=False)
+    question = models.ForeignKey(Question, on_delete= models.CASCADE)
+    choice_text = models.TextField()
+    is_correct = models.BooleanField(default=False)
+    def __str___(self):
+
+        return f"question: {self.question.question_text}, answer: {self.choice_text}, correct:{self.is_correct}"
 
 class Submission(models.Model):
      enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
